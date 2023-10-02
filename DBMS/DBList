@@ -1,1 +1,22 @@
 #! /usr/bin/bash
+
+
+
+echo "Checking the existence of the specified database..."
+
+
+read -p "Please Enter the Database to show: " DBName
+
+
+if [ -d "$DBName" ]
+then
+
+    echo "Contents of $DBName:"
+    ls "$DBName"
+else
+
+    echo "The database '$DBName' does not exist."
+#add Back or Quit Option
+    echo "Do you Want to Go Back or Quit?"
+fi
+
