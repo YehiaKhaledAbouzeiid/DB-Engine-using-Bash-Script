@@ -1,1 +1,23 @@
 #! /usr/bin/bash
+
+# Assuming you have a predefined database directory
+Database="$HOME/Database"
+
+
+# Check if the database directory exists
+if [ ! -d "$Database" ]
+then
+    echo "Database directory '$Database' does not exist. Exiting."
+    exit 1
+fi
+
+echo "Checking the existence of the specified Table from your selected Database..."
+
+read -p "Please Enter the Table to delete from: " TBName
+
+if [ ! -d "$Database/$TBName" ]
+then
+    echo "The Table '$TBName' does not exist."
+    echo "Do you Want to Go Back or Quit?"
+    exit 1
+fi
