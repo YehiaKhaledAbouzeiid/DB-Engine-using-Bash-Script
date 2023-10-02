@@ -21,3 +21,50 @@ then
     echo "Do you Want to Go Back or Quit?"
     exit 1
 fi
+
+PS3="Select an option: "
+
+select option in "Delete by ID" "Delete by Name" "Delete All Records" "Quit"
+do
+    case $option in
+        "Delete by ID")
+            read -p "Enter the ID to delete: " IDToDelete
+
+            awk -v id="$IDToDelete" -F, '$1 != id' "$Database/$TBName" > "$Database/$TBName.tmp" && mv "$Database/$TBName.tmp" "$Database/$TBName"
+            if [ $? -eq 0 ]
+            then
+                echo "Record with ID '$IDToDelete' has been successfully deleted from '$TBName'."
+            else
+                echo "An error occurred while deleting the record with ID '$IDToDelete' from '$TBName'."
+            fi
+            ;;
+        "Delete by Name")
+            read -p "Enter the Name to delete: " NameToDelete
+
+            sed -i "/$NameToDelete/d" "$Database/$TBName"
+            if [ $? -eq 0 ]
+            then
+                echo "Record with Name '$NameToDelete' has been successfully deleted from '$TBName'."
+            else
+                echo "An error occurred while deleting the record with Name '$NameToDelete' from '$TBName'."
+            fi
+            ;;
+        "Delete All Records")
+qqq
+            > "$Database/$TBName"
+            if [ $? -eq 0 ]
+            then
+                echo "All records in '$TBName' have been successfully deleted."
+            else
+                echo "An error occurred while deleting all records from '$TBName'."
+            fi
+            ;;
+        "Quit")
+            echo "Quitting..."
+            exit 0
+            ;;
+        *)
+            echo "Invalid option. Please select a valid option."
+            ;;
+    esac
+done
