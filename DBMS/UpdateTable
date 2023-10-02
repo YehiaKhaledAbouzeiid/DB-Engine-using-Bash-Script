@@ -20,3 +20,50 @@ then
     echo "Do you Want to Go Back or Quit?"
     exit 1
 fi
+
+PS3="Select an option: "
+
+select option in "Update by ID" "Update by Name" "Update All Records" "Quit"
+do
+    case $option in
+        "Update by ID")
+            read -p "Enter the ID to update: " IDToUpdate
+
+            awk -v id="$IDToUpdate" -F, -v OFS=',' 'BEGIN { found=0 } $1 == id { found=1; $2="NewValue"; } { print; } END { if (found == 0) { print id ",NewValue"; } }' "$Database/$TBName" > "$Database/$TBName.tmp" && mv "$Database/$TBName.tmp" "$Database/$TBName"
+            if [ $? -eq 0 ]
+            then
+                echo "Record with ID '$IDToUpdate' has been successfully updated in '$TBName'."
+            else
+                echo "An error occurred while updating the record with ID '$IDToUpdate' in '$TBName'."
+            fi
+            ;;
+        "Update by Name")
+            read -p "Enter the Name to update: " NameToUpdate
+
+            awk -v name="$NameToUpdate" -F, -v OFS=',' 'BEGIN { found=0 } $2 == name { found=1; $3="NewValue"; } { print; } END { if (found == 0) { print "NewID," name ",NewValue"; } }' "$Database/$TBName" > "$Database/$TBName.tmp" && mv "$Database/$TBName.tmp" "$Database/$TBName"
+            if [ $? -eq 0 ]
+            then
+                echo "Record with Name '$NameToUpdate' has been successfully updated in '$TBName'."
+            else
+                echo "An error occurred while updating the record with Name '$NameToUpdate' in '$TBName'."
+            fi
+            ;;
+        "Update All Records")
+
+            sed -i 's/OldValue/NewValue/g' "$Database/$TBName"
+            if [ $? -eq 0 ]
+            then
+                echo "All records in '$TBName' have been successfully updated."
+            else
+                echo "An error occurred while updating all records in '$TBName'."
+            fi
+            ;;
+        "Quit")
+            echo "Quitting..."
+            exit 0
+            ;;
+        *)
+            echo "Invalid option. Please select a valid option."
+            ;;
+    esac
+done
