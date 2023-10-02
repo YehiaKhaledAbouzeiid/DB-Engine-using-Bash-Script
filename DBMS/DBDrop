@@ -1,1 +1,27 @@
 #! /usr/bin/bash
+
+cd $Database
+export Database="./Database"
+echo "Checking the existence of the specified database..."
+
+read -p "Please Enter the Database to drop: " DBName
+
+if [ -d "$DBName" ]
+then
+
+    echo "Dropping the database '$DBName' and its contents..."
+    rm -r "$DBName"
+
+
+    if [ $? -eq 0 ]
+    then
+        echo "The database '$DBName' has been successfully dropped."
+    else
+        echo "An error occurred while dropping the database '$DBName'."
+    fi
+else
+
+    echo "The database '$DBName' does not exist."
+    echo "Do you Want to Go Back or Quit?"
+fi
+
