@@ -1,1 +1,35 @@
-#! /usr/bin/bash
+#!/bin/bash
+
+# Set the Database directory path as an absolute path
+Database="/root/Documents/DBMS/Database"
+echo "Checking the existence of the specified Database..."
+
+read -p "Please Enter the Database: " DBName
+
+if [ -d "$Database/$DBName" ]
+then
+    echo "Found database directory: $Database/$DBName"
+    cd "$DBName"
+    echo "Checking the existence of the specified Table..."
+    
+    read -p "Please Enter the Table to drop: " TBName
+
+    if [ -d "$TBName" ]
+    then
+        echo "Found table directory: $Database/$DBName/$TBName"
+        echo "Dropping the table '$TBName' and its columns..."
+        rm -r "$TBName"
+
+        if [ $? -eq 0 ]
+        then
+            echo "The table '$TBName' has been successfully dropped."
+        else
+            echo "An error occurred while dropping the table '$TBName'."
+        fi
+    else
+        echo "The table '$TBName' does not exist."
+        echo "Do you want to Go Back or Quit?"
+    fi
+else
+    echo "The database '$DBName' does not exist."
+fi
