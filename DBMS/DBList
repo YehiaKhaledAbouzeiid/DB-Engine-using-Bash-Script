@@ -1,7 +1,7 @@
 #! /usr/bin/bash
 
-
-
+cd $Database
+export Database="./Database"
 echo "Checking the existence of the specified database..."
 
 
