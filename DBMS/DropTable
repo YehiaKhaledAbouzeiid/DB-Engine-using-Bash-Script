@@ -14,7 +14,7 @@ then
     
     read -p "Please Enter the Table to drop: " TBName
 
-    if [ -d "$TBName" ]
+    if [ -f "$TBName" ]
     then
         echo "Found table directory: $Database/$DBName/$TBName"
         echo "Dropping the table '$TBName' and its columns..."
