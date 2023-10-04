@@ -1,2 +1,31 @@
+#! /usr/bin/bash
+
+cd $Database
+
+export DBName
+read -p "Please Enter New Database: " DBName
+
+
+if [ -d $DBName ]
+then
+	echo "this is exist"
+	while [ 2 -gt 0 ]
+	do
+		read -p "Please Enter Another Database: " DBName
+	if [ ! -d $DBName ]
+	then
+	mkdir $DBName
+	echo "Database Created"
+	../optionstable
+	break
+	fi
+
+	done
+else
+	mkdir $DBName
+	echo "Database Created"
+	../optionstable
+fi
+
 
 
