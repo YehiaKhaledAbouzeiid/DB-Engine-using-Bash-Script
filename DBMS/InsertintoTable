@@ -1,18 +1,9 @@
 #!/bin/bash
 
-Database="$HOME/Database"
-
-if [ ! -d "$Database" ]
-then
-    echo "Database directory '$Database' does not exist. Exiting."
-    exit 1
-fi
-
-echo "Checking the existence of the specified Table from your selected Database..."
+cd $DBName
 
 read -p "Please Enter the Table to insert into: " TBName
-
-if [ ! -d "$Database/$TBName" ]
+if [ ! -f "$TBName" ]
 then
     echo "The Table '$TBName' does not exist."
     echo "Do you Want to Go Back or Quit?"
@@ -32,7 +23,7 @@ do
     fi
 
     # Append the input data to the table file
-    echo "$inputData" >> "$Database/$TBName"
+    echo "$inputData" >> "$TBName"
 
     if [ $? -eq 0 ]
     then
