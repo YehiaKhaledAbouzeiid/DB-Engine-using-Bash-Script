@@ -1,0 +1,29 @@
+#! /usr/bin/bash
+
+cd $Database
+
+export DBName
+read -p "Please Enter exists Datbase: " DBName
+if [ ! -d "$DBName" ]
+then
+	echo "Not Exists"
+	echo "Do you Want to Back or Quit"
+
+	select option in Back Quit
+	do
+	case $REPLY in
+	1)
+	../DB
+	break;
+	;;
+	2)
+	break;
+	;;
+	esac
+	done
+	
+else
+
+../optionstable
+	
+fi
