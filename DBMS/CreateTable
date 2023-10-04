@@ -1,1 +1,57 @@
 #! /usr/bin/bash
+
+
+cd $DBName/
+
+read -p "Enter Name of Table: " t
+
+#touch $t
+
+
+#if [ -f $t ]
+#then
+#	echo "this is exist"
+#	while [ 2 -qt 0 ]
+#	read -p "Enter Another table: " t
+#	if [ ! -f $t ]
+#	then
+#		touch $t
+#		break;
+#	fi
+
+#else
+
+#	touch $t
+
+#fi
+
+
+
+
+if [ -f $t ]
+then
+	echo "this is exist"
+	while [ $o -eq 2 ]
+	do
+		read -p "Please Enter Another Table: " t
+	if [ ! -f $t ]
+	then
+	touch $t
+	echo "Table Created"
+	echo "Do you want Create another Table ?"
+	read -p "1) yes 2) No " o
+	
+	fi
+
+	#if [ ! -f $t ] && [ $o -eq 1 ]
+	#then
+	#read -p "Please Enter Second Table: " t
+	#touch $t
+	#break;
+	#fi
+	done
+else
+	touch $t
+	echo "Table Created"
+	
+fi
