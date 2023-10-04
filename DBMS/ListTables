@@ -1,1 +1,3 @@
 #! /usr/bin/bash
+
+find $DBName -type f
