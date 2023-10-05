@@ -1,25 +1,21 @@
 #!/usr/bin/bash
 
 
-Database="$HOME/Database"
+cd $DBName
 
 
-if [ ! -d "$Database" ]
-then
-    echo "Database directory '$Database' does not exist. Exiting."
-    exit 1
-fi
 
 echo "Checking the existence of the specified Table from your selected Database..."
 
 read -p "Please Enter the Table to update: " TBName
 
-if [ ! -d "$Database/$TBName" ]
+if [ ! -f "$TBName" ]
 then
     echo "The Table '$TBName' does not exist."
     echo "Do you Want to Go Back or Quit?"
     exit 1
 fi
+
 
 PS3="Select an option: "
 
@@ -29,7 +25,7 @@ do
         "Update by ID")
             read -p "Enter the ID to update: " IDToUpdate
 
-            awk -v id="$IDToUpdate" -F, -v OFS=',' 'BEGIN { found=0 } $1 == id { found=1; $2="NewValue"; } { print; } END { if (found == 0) { print id ",NewValue"; } }' "$Database/$TBName" > "$Database/$TBName.tmp" && mv "$Database/$TBName.tmp" "$Database/$TBName"
+            awk -v id="$IDToUpdate" -F, -v OFS=',' 'BEGIN { found=0 } $1 == id { found=1; $2="NewValue"; } { print; } END { if (found == 0) { print id ",NewValue"; } }' "$TBName" > "$TBName.tmp" && mv "$TBName.tmp" "$TBName"
             if [ $? -eq 0 ]
             then
                 echo "Record with ID '$IDToUpdate' has been successfully updated in '$TBName'."
@@ -40,7 +36,7 @@ do
         "Update by Name")
             read -p "Enter the Name to update: " NameToUpdate
 
-            awk -v name="$NameToUpdate" -F, -v OFS=',' 'BEGIN { found=0 } $2 == name { found=1; $3="NewValue"; } { print; } END { if (found == 0) { print "NewID," name ",NewValue"; } }' "$Database/$TBName" > "$Database/$TBName.tmp" && mv "$Database/$TBName.tmp" "$Database/$TBName"
+            awk -v name="$NameToUpdate" -F, -v OFS=',' 'BEGIN { found=0 } $2 == name { found=1; $3="NewValue"; } { print; } END { if (found == 0) { print "NewID," name ",NewValue"; } }' "$TBName" > "$TBName.tmp" && mv "$TBName.tmp" "$TBName"
             if [ $? -eq 0 ]
             then
                 echo "Record with Name '$NameToUpdate' has been successfully updated in '$TBName'."
@@ -50,7 +46,7 @@ do
             ;;
         "Update All Records")
 
-            sed -i 's/OldValue/NewValue/g' "$Database/$TBName"
+            sed -i 's/OldValue/NewValue/g' "$TBName"
             if [ $? -eq 0 ]
             then
                 echo "All records in '$TBName' have been successfully updated."
