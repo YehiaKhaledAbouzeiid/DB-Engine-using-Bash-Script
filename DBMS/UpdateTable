@@ -1,3 +1,22 @@
+#!/usr/bin/bash
+
+
+cd $DBName
+
+
+
+echo "Checking the existence of the specified Table from your selected Database..."
+
+read -p "Please Enter the Table to update: " TBName
+
+if [ ! -f "$TBName" ]
+then
+    echo "The Table '$TBName' does not exist."
+    echo "Do you Want to Go Back or Quit?"
+    exit 1
+fi
+
+
 PS3="Select an option: "
 
 select option in "Update by ID" "Update by Name" "Update All Records" "Quit"
