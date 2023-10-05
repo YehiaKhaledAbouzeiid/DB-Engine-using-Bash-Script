@@ -1,26 +1,19 @@
 #! /usr/bin/bash
 
-# Assuming you have a predefined database directory
-Database="$HOME/Database"
+cd $DBName
 
-
-# Check if the database directory exists
-if [ ! -d "$Database" ]
-then
-    echo "Database directory '$Database' does not exist. Exiting."
-    exit 1
-fi
 
 echo "Checking the existence of the specified Table from your selected Database..."
 
 read -p "Please Enter the Table to delete from: " TBName
 
-if [ ! -d "$Database/$TBName" ]
+if [ ! -f "$TBName" ]
 then
     echo "The Table '$TBName' does not exist."
     echo "Do you Want to Go Back or Quit?"
     exit 1
 fi
+
 
 PS3="Select an option: "
 
@@ -30,7 +23,7 @@ do
         "Delete by ID")
             read -p "Enter the ID to delete: " IDToDelete
 
-            awk -v id="$IDToDelete" -F, '$1 != id' "$Database/$TBName" > "$Database/$TBName.tmp" && mv "$Database/$TBName.tmp" "$Database/$TBName"
+            awk -v id="$IDToDelete" -F, '$1 != id' "$TBName" > "$TBName.tmp" && mv "$TBName.tmp" "$TBName"
             if [ $? -eq 0 ]
             then
                 echo "Record with ID '$IDToDelete' has been successfully deleted from '$TBName'."
@@ -41,7 +34,7 @@ do
         "Delete by Name")
             read -p "Enter the Name to delete: " NameToDelete
 
-            sed -i "/$NameToDelete/d" "$Database/$TBName"
+            sed -i "/$NameToDelete/d" "$TBName"
             if [ $? -eq 0 ]
             then
                 echo "Record with Name '$NameToDelete' has been successfully deleted from '$TBName'."
@@ -51,7 +44,7 @@ do
             ;;
         "Delete All Records")
 qqq
-            > "$Database/$TBName"
+            > "$TBName"
             if [ $? -eq 0 ]
             then
                 echo "All records in '$TBName' have been successfully deleted."
