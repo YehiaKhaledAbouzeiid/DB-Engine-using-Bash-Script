@@ -1,22 +1,3 @@
-#!/usr/bin/bash
-
-
-cd $DBName
-
-
-
-echo "Checking the existence of the specified Table from your selected Database..."
-
-read -p "Please Enter the Table to update: " TBName
-
-if [ ! -f "$TBName" ]
-then
-    echo "The Table '$TBName' does not exist."
-    echo "Do you Want to Go Back or Quit?"
-    exit 1
-fi
-
-
 PS3="Select an option: "
 
 select option in "Update by ID" "Update by Name" "Update All Records" "Quit"
@@ -24,8 +5,9 @@ do
     case $option in
         "Update by ID")
             read -p "Enter the ID to update: " IDToUpdate
+            read -p "Enter the new value: " NewValue
 
-            awk -v id="$IDToUpdate" -F, -v OFS=',' 'BEGIN { found=0 } $1 == id { found=1; $2="NewValue"; } { print; } END { if (found == 0) { print id ",NewValue"; } }' "$TBName" > "$TBName.tmp" && mv "$TBName.tmp" "$TBName"
+            awk -v id="$IDToUpdate" -v newValue="$NewValue" -F, -v OFS=',' 'BEGIN { found=0 } $1 == id { found=1; $2=newValue; } { print; } END { if (found == 0) { print id "," newValue; } }' "$TBName" > "$TBName.tmp" && mv "$TBName.tmp" "$TBName"
             if [ $? -eq 0 ]
             then
                 echo "Record with ID '$IDToUpdate' has been successfully updated in '$TBName'."
@@ -35,8 +17,9 @@ do
             ;;
         "Update by Name")
             read -p "Enter the Name to update: " NameToUpdate
+            read -p "Enter the new value: " NewValue
 
-            awk -v name="$NameToUpdate" -F, -v OFS=',' 'BEGIN { found=0 } $2 == name { found=1; $3="NewValue"; } { print; } END { if (found == 0) { print "NewID," name ",NewValue"; } }' "$TBName" > "$TBName.tmp" && mv "$TBName.tmp" "$TBName"
+            awk -v name="$NameToUpdate" -v newValue="$NewValue" -F, -v OFS=',' 'BEGIN { found=0 } $2 == name { found=1; $3=newValue; } { print; } END { if (found == 0) { print "NewID," name "," newValue; } }' "$TBName" > "$TBName.tmp" && mv "$TBName.tmp" "$TBName"
             if [ $? -eq 0 ]
             then
                 echo "Record with Name '$NameToUpdate' has been successfully updated in '$TBName'."
@@ -45,11 +28,13 @@ do
             fi
             ;;
         "Update All Records")
+            read -p "Enter the old value to update: " OldValue
+            read -p "Enter the new value: " NewValue
 
-            sed -i 's/OldValue/NewValue/g' "$TBName"
+            sed -i "s/$OldValue/$NewValue/g" "$TBName"
             if [ $? -eq 0 ]
             then
-                echo "All records in '$TBName' have been successfully updated."
+                echo "All records in '$TBName' with the value '$OldValue' have been successfully updated to '$NewValue'."
             else
                 echo "An error occurred while updating all records in '$TBName'."
             fi
