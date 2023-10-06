@@ -1,1 +1,37 @@
 #! /usr/bin/bash
+
+pwd
+
+if [[ "$(find -type f | grep ".table" | wc -l)" -gt 0 ]]
+then 
+pwd
+	find -type f | grep ".table"
+	
+else 
+pwd
+	echo "Nothing To Show"
+fi
+
+read -p "Enter Name of Table: " table
+
+select option in ShowTableContent SearchinTable Back
+do
+
+case $REPLY in
+1)
+
+cat "./$table.table"
+;;
+
+2)
+read -p "Enter search string: " search_string
+grep -i "$search_string" "./$table.table"
+;;
+
+3)
+break;
+
+;;
+esac
+
+done
