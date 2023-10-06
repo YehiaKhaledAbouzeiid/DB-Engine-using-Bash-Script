@@ -1,57 +1,44 @@
-#! /usr/bin/bash
-
-
-cd $DBName/
-
-read -p "Enter Name of Table: " t
-
-#touch $t
-
-
-#if [ -f $t ]
-#then
-#	echo "this is exist"
-#	while [ 2 -qt 0 ]
-#	read -p "Enter Another table: " t
-#	if [ ! -f $t ]
-#	then
-#		touch $t
-#		break;
-#	fi
-
-#else
-
-#	touch $t
-
-#fi
+#!/bin/bash
 
 
 
-
-if [ -f $t ]
-then
-	echo "this is exist"
-	while [ $o -eq 2 ]
-	do
-		read -p "Please Enter Another Table: " t
-	if [ ! -f $t ]
-	then
-	touch $t
-	echo "Table Created"
-	echo "Do you want Create another Table ?"
-	read -p "1) yes 2) No " o
+while true
+ do
+    read -p "Enter Name of Table: " table
+    
+    if [ -f "$table" ]
+     then
+        echo "Table already exists."
+    else
+        touch "$table.table"
+	touch "Meta_$table"
+        echo "Table Created"
 	
-	fi
-
-	#if [ ! -f $t ] && [ $o -eq 1 ]
-	#then
-	#read -p "Please Enter Second Table: " t
-	#touch $t
-	#break;
-	#fi
-	done
-else
-	touch $t
-	echo "Table Created"
+	read -p "Enter Number of column: " n
 	
-fi
+	read -p "Enter Name of Primary Column: " c
+	echo "$c" >> "Meta_$table"
+	
+	#echo $n
+	sed -i 's/$/\np/' "./Meta_$table"
+	for ((i=2; i<="$n"; i++))
+        do
+		read -p "Name of Column $i: " c
+		read -p "Integer(i) or String(s): " s
+	    	
+		sed -i "1s/$/:$c/" "Meta_$table"
+		sed -i "2s/$/:$s/" "Meta_$table"
+		
+
+        done
+	
+    fi
+
+    read -p "Do you want to create another Table? (1) Yes / (2) No: " choice
+    
+    if [ "$choice" != "1" ]
+     then
+     	optionstable
+        break
+    fi
+done
