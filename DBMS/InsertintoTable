@@ -1,7 +1,6 @@
-#!/bin/bash
+#! /usr/bin/bash
 
-cd $DBName
-
+pwd
 read -p "Please Enter the Table to insert into: " TBName
 if [ ! -f "$TBName" ]
 then
@@ -14,7 +13,17 @@ echo "Inserting data into '$TBName'."
 
 while true
 do
-    read -p "Enter data in the format 'ID,Name,Value' (or 'quit' to exit): " inputData
+	echo "Enter data in the format "
+    awk -F: '
+{
+	i=1
+	if(NR==1)
+	{
+	print $0
+	}
+}' "./Meta_$TBName"
+
+    read -p "(or 'quit' to exit): " inputData
 
     if [ "$inputData" == "quit" ]
     then
