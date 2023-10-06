@@ -1,19 +1,29 @@
 #! /usr/bin/bash
 
 
-cd $DBName
-
-
-if [ -f >= 0 ]
+if [[ "$(find -type f | grep ".table" | wc -l)" -gt 0 ]]
 then
-	find -type f
+	find -type f | grep ".table"
+	read -p "Enter 1 to Back: " b
+
+	if [ $b == 1 ]
+	then 
+		#cd ~
+		optionstable
+		
+	else 
+		echo "Error Rerun DB"
+	fi
+	
 else
 	echo "Nothing to Show"
 	read -p "Enter 1 to Back: " b
 
 	if [ $b == 1 ]
 	then 
-		../../optionstable
+		#cd ~
+		optionstable
+		
 	else 
 		echo "Error Rerun DB"
 	fi
