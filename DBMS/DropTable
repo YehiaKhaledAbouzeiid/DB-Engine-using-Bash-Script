@@ -2,8 +2,7 @@
 
 # Set the Database directory path as an absolute path
 
-
-cd $DBName
+pwd
 
 #echo "Checking the existence of the specified Database..."
 
@@ -27,3 +26,4 @@ if [ -f "$TBName" ]
         echo "The table '$TBName' does not exist."
         echo "Do you want to Go Back or Quit?"
     fi
+
