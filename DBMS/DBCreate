@@ -1,31 +1,46 @@
 #! /usr/bin/bash
 
-cd $Database
 
-export DBName
-read -p "Please Enter New Database: " DBName
+#cd ./DBMS
 
+if [[ ! "pwd" =~ ${HOME/DBMS}$ ]]
+ then
 
-if [ -d $DBName ]
-then
-	echo "this is exist"
-	while [ 2 -gt 0 ]
-	do
-		read -p "Please Enter Another Database: " DBName
-	if [ ! -d $DBName ]
-	then
-	mkdir $DBName
-	echo "Database Created"
-	../optionstable
-	break
-	fi
-
-	done
-else
-	mkdir $DBName
-	echo "Database Created"
-	../optionstable
+    cd $HOME/DBMS
 fi
+export Database="./Database"
 
+if [ ! -d $Database ]
+then
+	mkdir $Database
+	cd $Database
+fi
+pwd
+select option in ConnectDatabase CreateDatabase ListDatabase DropDatabase Quit
+do
 
+case $REPLY in
+1)
+DBConnect
+break;
+;;
 
+2)
+./DBCreate
+;;
+
+3)
+./DBList
+;;
+
+4)
+./DBDrop
+;;
+
+5)
+break;
+
+;;
+esac
+
+done
