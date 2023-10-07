@@ -41,3 +41,5 @@ do
         echo "An error occurred while inserting data into '$TBName'."
     fi
 done
+
+
