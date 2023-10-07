@@ -2,7 +2,7 @@
 
 pwd
 read -p "Please Enter the Table to insert into: " TBName
-if [ ! -f "$TBName" ]
+if [ ! -f "$TBName.table" ]
 then
     echo "The Table '$TBName' does not exist."
     echo "Do you Want to Go Back or Quit?"
@@ -32,7 +32,7 @@ do
     fi
 
     # Append the input data to the table file
-    echo "$inputData" >> "$TBName"
+    echo "$inputData" >> "$TBName.table"
 
     if [ $? -eq 0 ]
     then
@@ -41,5 +41,3 @@ do
         echo "An error occurred while inserting data into '$TBName'."
     fi
 done
-
-
