@@ -1,38 +1,54 @@
 #! /usr/bin/bash
 
 
-select option in CreateTable ListTables DropTable InsertintoTable SelectfromTable DeletefromTable UpdateTable
+if [[ ! "$PWD" =~ ${DBName}$ ]]
+ then
+    cd $DBName/
+fi
+
+pwd
+select option in CreateTable ListTables DropTable InsertintoTable SelectfromTable DeletefromTable UpdateTable Back
 do
 
 case $REPLY in
 1)
-../CreateTable
+CreateTable
+break;
 ;;
 
 2)
-../ListTables
+
+ListTables
+
+break;
 ;;
 
 3)
-../DropTable
+DropTable
+break;
 ;;
 
 4)
-../InsertintoTable
+InsertintoTable
+break;
 ;;
 
 5)
-../SelectfromTable
+SelectfromTable
+break;
 ;;
 6)
-../DeletefromTable
+DeletefromTable
+break;
 ;;
 
 7)
-../UpdateTable
+UpdateTable
+break;
 ;;
 
 8)
+DB
 break;
 ;;
 esac
