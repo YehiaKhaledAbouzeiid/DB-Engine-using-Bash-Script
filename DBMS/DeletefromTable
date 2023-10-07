@@ -1,6 +1,5 @@
 #! /usr/bin/bash
 
-cd $DBName
 
 
 echo "Checking the existence of the specified Table from your selected Database..."
@@ -43,7 +42,7 @@ do
             fi
             ;;
         "Delete All Records")
-qqq
+
             > "$TBName"
             if [ $? -eq 0 ]
             then
