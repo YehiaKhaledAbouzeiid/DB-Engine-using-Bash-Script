@@ -1,19 +1,25 @@
 #! /usr/bin/bash
 
-cd $Database
-
+export DBName
+if [[ ! "$PWD" =~ ${Database}$ ]]
+ then
+    cd $Database/
+fi
+pwd
 export DBName
 read -p "Please Enter exists Datbase: " DBName
 if [ ! -d "$DBName" ]
 then
 	echo "Not Exists"
 	echo "Do you Want to Back or Quit"
+	pwd
 
 	select option in Back Quit
 	do
 	case $REPLY in
 	1)
-	../DB
+	cd ../
+	./DB
 	break;
 	;;
 	2)
@@ -24,6 +30,6 @@ then
 	
 else
 
-../optionstable
+optionstable
 	
 fi
