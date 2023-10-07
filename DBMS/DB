@@ -1,18 +1,27 @@
 #! /usr/bin/bash
 
+
+#cd ./DBMS
+
+if [[ ! "pwd" =~ ${HOME/DBMS}$ ]]
+ then
+
+    cd $HOME/DBMS
+fi
 export Database="./Database"
+
 if [ ! -d $Database ]
 then
 	mkdir $Database
 	cd $Database
 fi
-
+pwd
 select option in ConnectDatabase CreateDatabase ListDatabase DropDatabase Quit
 do
 
 case $REPLY in
 1)
-./DBConnect
+DBConnect
 break;
 ;;
 
