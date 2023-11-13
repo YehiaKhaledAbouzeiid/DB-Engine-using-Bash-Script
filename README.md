@@ -4,7 +4,9 @@
 The project aim is to build a database engine simulator, and I have used bash scripting to do that, through the project you will find: 
 
 ● Awk programming language that used to perform text processing and data extraction
+
 ● Functions for modularization and readability purposes
+
 ● Sed for searching, finding, and replacing
 
 ## Project Description
@@ -18,6 +20,7 @@ Metadata File: This file encapsulates the table schema, comprising essential inf
 
 ● A basic database engine capable of managing databases and tables, enabling actions like creation, dropping, listing, 
 and connecting to databases.
+
 ● Users can perform a range of table operations, including creating, inserting, dropping, selecting, listing, deleting, and 
 updating data.
 
